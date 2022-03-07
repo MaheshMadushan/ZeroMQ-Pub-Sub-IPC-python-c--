@@ -1,11 +1,14 @@
 # Espresso Pattern - from example
 # This shows how to capture data using a pub-sub proxy
-
 from __future__ import print_function
 import binascii
 import os
 from random import randint
 import zmq
+import time
+from string import ascii_uppercase as uppercase
+from threading import Thread
+from zmq.devices import monitored_queue
 
 def socket_set_hwm(socket, hwm=-1):
     """libzmq 2/3/4 compatible sethwm"""
@@ -49,14 +52,6 @@ def zpipe(ctx):
     b.connect(iface)
     return a,b
 
-import time
-
-from random import randint
-from string import ascii_uppercase as uppercase
-from threading import Thread
-
-import zmq
-from zmq.devices import monitored_queue
 
 # import zpipe as zpipe
 
