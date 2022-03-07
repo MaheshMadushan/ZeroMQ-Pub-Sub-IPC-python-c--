@@ -14,7 +14,6 @@ def dump(msg_or_socket):
 
     print("----------------------------------------")
 
-
     for part in msg:
         print("[%03d]" % len(part), end=' ')
         is_text = True
@@ -22,4 +21,4 @@ def dump(msg_or_socket):
             print(part.decode('ascii'))
         except UnicodeDecodeError:
             print(r"0x%s" % (binascii.hexlify(part).decode('ascii')))
-
+''' function for print message that recieved from pub which subcribed'''
