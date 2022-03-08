@@ -94,7 +94,7 @@ def publisher_thread():
 
     while True:
         time.sleep(1)
-        string = "%s-%s" % (uppercase[randint(0,10)], randint(0,10000000000000000000000000000000000000000000000000000000000000000000000000))
+        string = "%s-%s" % ("A", randint(0,10000000000000000000000000000000000000000000000000000000000000000000000000))
         try:
             publisher.send(string.encode('utf-8'))
         except zmq.ZMQError as e:
