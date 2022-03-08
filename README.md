@@ -4,6 +4,7 @@ ZeroMQ IPC with publisher subcriber model to communicate between two application
 ```seq
 
 C++/Python \nSubcriber \nprocess->>Python \nPublish \nProcess: Publish
+
 Python \nPublish \nProcess->>C++/Python \nSubcriber \nprocess: Subcribes
 
 ```
