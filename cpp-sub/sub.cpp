@@ -2,6 +2,18 @@
 #include <zmq.hpp>
 #include <zmq_addon.hpp>
 #include <thread>
+#include <signal.h> // POSIX
+
+#define PYCPPIPC_DELETE(p_object)          \
+    {                                      \
+        delete p_object;                   \
+        p_object = 0;                      \
+    }
+
+void interrupt_handler(int sig_num){
+    std:: cout << "process intterupted" << std:: endl;
+    signal(SIGINT,SIG_DFL); // dflt action reregsitering
+}
 
 void subcribe(char channel[])
 {
@@ -16,12 +28,13 @@ void subcribe(char channel[])
         std::vector<zmq::message_t> recv_msgs;
         zmq::message_t message;
         bool rc = subscriber.recv(&message,1);
-        rc && std::cout << message.to_string() << std::endl;
+        rc && std::cout << message.to_string() << std::endl; // if recicved print msg
         
     }
 }
 int main()
 {
+    signal(SIGINT,interrupt_handler);
     char a[] = "A";
     char b[] = "B";
     char c[] = "C";
