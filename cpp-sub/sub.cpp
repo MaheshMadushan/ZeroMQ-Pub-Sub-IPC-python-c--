@@ -3,12 +3,13 @@
 #include <zmq_addon.hpp>
 #include <thread>
 
-void subcribe(){
-    
+void subcribe(char channel[])
+{
+
     zmq::context_t ctx;
     zmq::socket_t subscriber(ctx,zmq::socket_type::sub);
     subscriber.connect("tcp://localhost:6001");
-    zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, "A", 1);
+    zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE, channel, 1);
 
     while (1) {
         
@@ -19,14 +20,15 @@ void subcribe(){
         
     }
 }
-
 int main()
 {
-    std::thread subscriber_a (subcribe); // spawn new sub thread
-    std::thread subscriber_b (subcribe); // spawn new sub thread
-    std::thread subscriber_c (subcribe); // spawn new sub thread
+    char a[] = "A";
+    char b[] = "B";
+    char c[] = "C";
+    std::thread subscriber_a (subcribe,a); // spawn new sub thread
+    std::thread subscriber_b (subcribe,b); // spawn new sub thread
+    std::thread subscriber_c (subcribe,c); // spawn new sub thread
     subscriber_a.join();
     subscriber_b.join();
     subscriber_c.join();
-    
 }
