@@ -1,0 +1,3 @@
+make
+./sub
+make clean

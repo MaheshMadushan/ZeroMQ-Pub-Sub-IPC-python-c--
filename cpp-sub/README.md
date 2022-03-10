@@ -1,4 +1,4 @@
-### BUILD PROCESS FOR [libzmq](https://github.com/zeromq/zmqpp)
+### BUILD PROCESS FOR [libzmq](https://github.com/zeromq/libzmq)
 
 - cd /tmp/
 - git clone https://github.com/zeromq/libzmq
