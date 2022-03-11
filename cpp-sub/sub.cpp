@@ -26,7 +26,6 @@ struct context
 
 void interrupt_handler(int sig_num){
     std::cout << "process intterupted" << std::endl;
-    // PYCPPIPC_DELETE()
     signal(SIGINT,SIG_DFL); // dflt action reregsitering
 }
 
@@ -35,7 +34,8 @@ void subcribe(context ctx)
     zmq::context_t *context = ctx.ctx;
     zmq::socket_t subscriber(*context,zmq::socket_type::sub);
     subscriber.connect(ctx.server_addr);
-    zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE,  ctx.channel_name, 1);
+    size_t channel_name_size = sizeof(*ctx.channel_name)/sizeof(ctx.channel_name[0]);
+    zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE,  ctx.channel_name, channel_name_size);
 
     while (1) {
         
@@ -68,7 +68,7 @@ int main()
     c_context.server_addr = "tcp://localhost:6001";
     c_context.ctx = new zmq::context_t(); // use new context
     c_context.channel_name = "D";
-
+    
     std::thread subscriber_c (subcribe,c_context); // spawn new sub thread
     signal(SIGINT,interrupt_handler);
 
