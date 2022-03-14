@@ -9,7 +9,6 @@
 #else
     #include <unistd.h>
 #endif
-
 // under construction
 #define PYCPPIPC_DELETE(p_object)          \
     {                                      \
@@ -38,7 +37,7 @@ void subcribe(context ctx)
     zmq_setsockopt (subscriber, ZMQ_SUBSCRIBE,  ctx.channel_name, channel_name_size);
 
     while (1) {
-        
+
         std::vector<zmq::message_t> recv_msgs;
         zmq::message_t message;
         bool rc = subscriber.recv(&message,1);
