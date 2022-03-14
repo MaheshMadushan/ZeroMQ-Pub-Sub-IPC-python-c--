@@ -12,9 +12,9 @@
 class IPC
 {
 private:
-    /* data */
+   
 public:
-    IPC(/* args */);
+    IPC();
     ~IPC();
 };
 
