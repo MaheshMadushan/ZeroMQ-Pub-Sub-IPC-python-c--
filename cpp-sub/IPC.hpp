@@ -2,10 +2,6 @@
 // creating context and destrying context
 // creating sockets and destroying sockets
 
-
-
-
-
 #ifndef IPC_H
 #define IPC_H
 #include <iostream>
