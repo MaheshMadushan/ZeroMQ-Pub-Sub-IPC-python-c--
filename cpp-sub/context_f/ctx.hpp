@@ -2,7 +2,7 @@
 #define CTX_HPP
 
 // under construction
-#define PYCPPIPC_DELETE(p_object)           \
+#define IPCPYCPPZMQ_DELETE(p_object)           \
     {                                       \
         if(p_object == ZMQ_NULLPTR){        \
             return;                         \
@@ -12,25 +12,49 @@
     }
 
 #include <zmq.hpp>
-
-class ctx
+#include <iostream>
+namespace IPCPYCPPZMQ
 {
-    private:
-        // type name             "new" returns a p
-        zmq::context_t *context = ZMQ_NULLPTR;
-    public:
-        ctx();
-        ~ctx();
-};
-
-ctx::ctx()
-{
-    context  = new zmq::context_t();
+#ifdef ZMQ_CPP11
+    enum class ctxoptions
+    {
+        
+    };
+#endif
+    class ctx
+    {
+        private:
+            // type name             "new" returns a p
+            zmq::context_t *context = ZMQ_NULLPTR;
+        public:
+            ctx();
+            void setCtxOption();
+            void getCtxOption();
+            ~ctx();
+    };
 }
 
-ctx::~ctx()
+
+IPCPYCPPZMQ::ctx::ctx()
 {
-    PYCPPIPC_DELETE(context);
+    try
+    {
+        context  = new zmq::context_t();
+    }
+    catch (const std::bad_alloc &e)
+    {
+        std::cerr << e.what() /* std::bad_alloc */ << '\n';
+    }
+}
+
+void IPCPYCPPZMQ::ctx::setCtxOption()
+{
+    this->context->set(static_cast<zmq::ctxopt>(4),4);
+}
+
+IPCPYCPPZMQ::ctx::~ctx()
+{
+    IPCPYCPPZMQ_DELETE(context);
 }
 
 
