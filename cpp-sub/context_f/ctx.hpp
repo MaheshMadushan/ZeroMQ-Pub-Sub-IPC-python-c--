@@ -7,7 +7,7 @@
 namespace IPCPYCPPZMQ
 {
 #ifdef ZMQ_CPP11
-    enum class ctxoptions
+    enum class ctxoption
     {
         block_ctx_termination_call = static_cast<int>(zmq::ctxopt::blocky),
         size_of_thread_pool_to_IO_handling = static_cast<int>(zmq::ctxopt::io_threads),
@@ -18,9 +18,13 @@ namespace IPCPYCPPZMQ
 #ifdef __unix__
         thread_affinity_cpu_add = static_cast<int>(zmq::ctxopt::thread_affinity_cpu_add),
         thread_affinity_cpu_remove = static_cast<int>(zmq::ctxopt::thread_affinity_cpu_remove),
+        thread_name_prefix = static_cast<int>(zmq::ctxopt::thread_name_prefix),
 #endif
+        max_message_size = static_cast<int>(zmq::ctxopt::max_msgsz),
+        max_sockets = static_cast<int>(zmq::ctxopt::max_sockets)
     };
 #endif
+
     class ctx
     {
         private:
@@ -28,22 +32,21 @@ namespace IPCPYCPPZMQ
             zmq::context_t *context = ZMQ_NULLPTR;
         public:
             ctx();
-            void setCtxOption();
-            void getCtxOption();
+            void setCtxOption(ctxoption option, int option_value);
+            int getCtxOption(ctxoption option);
             ~ctx();
     };
 }
 
 // under construction
-#define IPCPYCPPZMQ_DELETE(p_object)        \
-    {                                       \
-        if(p_object == ZMQ_NULLPTR){        \
-            return;                         \
-        }                                   \
-        delete p_object;                    \
-        p_object = 0;                       \
+#define IPCPYCPPZMQ_DELETE(p_object)  \
+    {                                 \
+        if(p_object == ZMQ_NULLPTR){  \
+            return;                   \
+        }                             \
+        delete p_object;              \
+        p_object = 0;                 \
     }
-
 
 IPCPYCPPZMQ::ctx::ctx()
 {
@@ -57,13 +60,20 @@ IPCPYCPPZMQ::ctx::ctx()
     }
 }
 
-void IPCPYCPPZMQ::ctx::setCtxOption()
+void IPCPYCPPZMQ::ctx::setCtxOption(ctxoption option, int option_value)
 {
-    this->context->set(static_cast<zmq::ctxopt>(4),4);
+    this->context->set(static_cast<zmq::ctxopt>(option),option_value);
+}
+
+int IPCPYCPPZMQ::ctx::getCtxOption(ctxoption option)
+{
+    int option_value = this->context->get(static_cast<zmq::ctxopt>(option));
+    return option_value;
 }
 
 IPCPYCPPZMQ::ctx::~ctx()
 {
+    this->context->~context_t();
     IPCPYCPPZMQ_DELETE(context);
 }
 
