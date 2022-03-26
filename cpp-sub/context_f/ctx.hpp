@@ -13,7 +13,7 @@
 #include <zmq.hpp>
 #include <iostream>
 
-namespace IPCPYCPPZMQ
+namespace IPCPYCPPZMQCTX
 {
 #ifdef ZMQ_CPP11
     enum class ctxoption
@@ -48,7 +48,7 @@ namespace IPCPYCPPZMQ
 }
 
 
-IPCPYCPPZMQ::ctx::ctx()
+IPCPYCPPZMQCTX::ctx::ctx()
 {
     try
     {
@@ -60,18 +60,18 @@ IPCPYCPPZMQ::ctx::ctx()
     }
 }
 
-void IPCPYCPPZMQ::ctx::setCtxOption(ctxoption option, int option_value)
+void IPCPYCPPZMQCTX::ctx::setCtxOption(ctxoption option, int option_value)
 {
     this->context->set(static_cast<zmq::ctxopt>(option),option_value);
 }
 
-int IPCPYCPPZMQ::ctx::getCtxOption(ctxoption option)
+int IPCPYCPPZMQCTX::ctx::getCtxOption(ctxoption option)
 {
     int option_value = this->context->get(static_cast<zmq::ctxopt>(option));
     return option_value;
 }
 
-IPCPYCPPZMQ::ctx::~ctx()
+IPCPYCPPZMQCTX::ctx::~ctx()
 {
     this->context->~context_t();
     IPCPYCPPZMQ_DELETE(context);
