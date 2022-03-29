@@ -56,7 +56,7 @@ IPCPYCPPZMQCTX::ctx::ctx()
     }
     catch (const std::bad_alloc &e)
     {
-        std::cerr << e.what() /* std::bad_alloc */ << '\n';
+        std::cerr << e.what() /*  std::bad_alloc  */ << '\n';
     }
 }
 
