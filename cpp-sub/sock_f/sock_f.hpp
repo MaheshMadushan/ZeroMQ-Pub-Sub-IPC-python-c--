@@ -31,6 +31,30 @@ IPCPYCPPZMQSOCK::sock_f::sock_f()
     this->socket = new zmq::socket_t();
 }
 
+void IPCPYCPPZMQSOCK::sock_f::bindSocketAddres(){
+
+}
+
+void IPCPYCPPZMQSOCK::sock_f::connectTo(){
+
+}
+
+void IPCPYCPPZMQSOCK::sock_f::disconnectFrom(){
+
+}
+
+bool IPCPYCPPZMQSOCK::sock_f::isConnected(){
+
+}
+
+void IPCPYCPPZMQSOCK::sock_f::setSocketOption(int option_,const void *optionValue, size_t optionValueLength){
+
+}
+
+void IPCPYCPPZMQSOCK::sock_f::getSocketOption(int option_){
+
+}
+
 IPCPYCPPZMQSOCK::sock_f::~sock_f()
 {
     delete socket;
