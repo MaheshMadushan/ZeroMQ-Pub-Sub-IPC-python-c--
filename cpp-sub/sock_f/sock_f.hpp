@@ -2,10 +2,23 @@
 // Socket factroy
 #ifndef SOCK_H
 #define SOCK_H
+
 #include <zmq.hpp>
+
+#define INPROC 100
+#define TCP 200
+#define IPC 300
+#define PGM 400
+#define EPGM 500
 
 namespace IPCPYCPPZMQSOCK
 {
+    enum socket_types
+    {
+        inter_process_communication = INPROC,
+
+    };
+
     class sock_f
     {
 
