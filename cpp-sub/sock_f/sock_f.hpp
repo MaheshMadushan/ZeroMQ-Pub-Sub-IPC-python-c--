@@ -15,7 +15,11 @@ namespace IPCPYCPPZMQSOCK
 {
     enum socket_types
     {
-        inter_process_communication = INPROC,
+        in_process_communication = INPROC,
+        inter_process_communication = IPC,
+        reliable_unicast_tcp = TCP,
+        reliable_pragmatic_general_multicast = PGM,
+        
 
     };
 
