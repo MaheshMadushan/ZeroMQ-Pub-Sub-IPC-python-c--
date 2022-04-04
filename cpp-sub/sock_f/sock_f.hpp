@@ -5,6 +5,7 @@
 
 #include <zmq.hpp>
 
+
 #define INPROC 100
 #define TCP 200
 #define IPC 300
@@ -19,8 +20,7 @@ namespace IPCPYCPPZMQSOCK
         inter_process_communication = IPC,
         reliable_unicast_tcp = TCP,
         reliable_pragmatic_general_multicast = PGM,
-        
-
+        udp_pragmatic_encapsulated_general_multicast = EPGM
     };
 
     class sock_f
