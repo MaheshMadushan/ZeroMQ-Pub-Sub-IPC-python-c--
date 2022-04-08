@@ -1,6 +1,6 @@
 #ifndef CTX_HPP
 #define CTX_HPP
-// under construction
+
 #define IPCPYCPPZMQ_DELETE(p_object)  \
     {                                 \
         if(p_object == ZMQ_NULLPTR){  \

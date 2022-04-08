@@ -5,12 +5,20 @@
 
 #include <zmq.hpp>
 
-
 #define INPROC 100
 #define TCP 200
 #define IPC 300
 #define PGM 400
 #define EPGM 500
+
+#define IPCPYCPPZMQ_DELETE(p_object)  \
+    {                                 \
+        if(p_object == ZMQ_NULLPTR){  \
+            return;                   \
+        }                             \
+        delete p_object;              \
+        p_object = 0;                 \
+    }
 
 namespace IPCPYCPPZMQSOCK
 {
@@ -32,50 +40,52 @@ namespace IPCPYCPPZMQSOCK
         public:
             sock_f();
             ~sock_f();
-            void bindSocketAddres();
+            void bindSocketAddres(std::string const &addres);
             void unbindSocketAddres();
-            void connectTo();
-            void disconnectFrom();
+            void connectTo(std::string const &address);
+            void disconnectFrom(std::string const &address);
             bool isConnected();
-            void getSocketOption(int option_);
+
+            template <typename T>
+            T getSocketOption(int option_);
+
             void setSocketOption(int option_,const void *optionValue, size_t optionValueLength);
     };
 
 } // namespace IPCPYCPPZMQSOCK
 
-IPCPYCPPZMQSOCK::sock_f::sock_f()
-{
+IPCPYCPPZMQSOCK::sock_f::sock_f(){
     this->socket = new zmq::socket_t();
 }
 
-void IPCPYCPPZMQSOCK::sock_f::bindSocketAddres(){
-
+void IPCPYCPPZMQSOCK::sock_f::bindSocketAddres(std::string const &address){
+    this->socket->bind(address);
 }
 
-void IPCPYCPPZMQSOCK::sock_f::connectTo(){
-
+void IPCPYCPPZMQSOCK::sock_f::connectTo(std::string const &address){
+    this->socket->connect(address);
 }
 
-void IPCPYCPPZMQSOCK::sock_f::disconnectFrom(){
-
+void IPCPYCPPZMQSOCK::sock_f::disconnectFrom(std::string const &address){
+    this->socket->disconnect(address);
 }
 
 bool IPCPYCPPZMQSOCK::sock_f::isConnected(){
-
+    return this->socket->connected();
 }
 
 void IPCPYCPPZMQSOCK::sock_f::setSocketOption(int option_,const void *optionValue, size_t optionValueLength){
-
+    this->socket->setsockopt(option_,optionValue,optionValueLength);
 }
 
-void IPCPYCPPZMQSOCK::sock_f::getSocketOption(int option_){
-
+template <typename T>
+T IPCPYCPPZMQSOCK::sock_f::getSocketOption(int option_){
+    return this->socket->getsockopt<T>(option_);
 }
 
 IPCPYCPPZMQSOCK::sock_f::~sock_f()
 {
-    delete socket;
-    socket = ZMQ_NULLPTR;
+    IPCPYCPPZMQ_DELETE(socket);
 }
 
 #endif
