@@ -6,7 +6,7 @@
 class message_f
 {
     private:
-        zmq::message_t message  = nullptr;
+        zmq::message_t *message  = ZMQ_NULLPTR;
     public:
         message_f();
         ~message_f();
