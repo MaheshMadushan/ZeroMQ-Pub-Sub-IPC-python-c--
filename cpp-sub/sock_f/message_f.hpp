@@ -14,9 +14,10 @@ class message_f
 
 message_f::message_f(/* args */)
 {
-    zmq::message_t 
+    message = new zmq::message_t();
 }
 
 message_f::~message_f()
 {
+    
 }
