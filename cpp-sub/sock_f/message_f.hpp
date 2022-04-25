@@ -12,12 +12,12 @@ class message_f
         ~message_f();
 };
 
-message_f::message_f(/* args */)
+message_f::message_f()
 {
     message = new zmq::message_t();
 }
 
 message_f::~message_f()
 {
-    
+
 }
