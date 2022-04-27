@@ -25,6 +25,7 @@ class message_f
 {
     private:
         zmq::message_t *message  = ZMQ_NULLPTR;
+        void freeBuffer(void *data, void *hint); // ffn ad hint
     public:
         message_f();
         ~message_f();
