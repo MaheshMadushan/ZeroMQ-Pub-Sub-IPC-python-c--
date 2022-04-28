@@ -25,15 +25,25 @@ class message_f
 {
     private:
         zmq::message_t *message  = ZMQ_NULLPTR;
+        // void * free_data_buffer_fn(void *data, void *hint);
     public:
-        message_f();
+        message_f(void *data);
         ~message_f();
 };
-message_f::message_f()
+
+
+message_f::message_f(void *data)
 {
-   this->message = new zmq::message_t();
+   this->message = new zmq::message_t(data,sizeof(data),free_data_buffer_fn,ZMQ_NULLPTR);
 }
+
 message_f::~message_f()
 {
     IPCPYCPPZMQ_DELETE(this->message);
+}
+
+// free function - shouldn't be a member function - read https://stackoverflow.com/questions/2298242/callback-functions-in-c
+void free_data_buffer_fn(void *data, void *hint)
+{
+    IPCPYCPPZMQ_DELETE(data);
 }
