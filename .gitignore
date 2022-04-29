@@ -2,3 +2,4 @@ __pycache__
 cpp-sub/sub
 cpp-sub/sub.o
 .vscode/settings.json
+libzmq
