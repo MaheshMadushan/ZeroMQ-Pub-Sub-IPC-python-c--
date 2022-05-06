@@ -15,6 +15,7 @@
 
 namespace IPCPYCPPZMQCTX
 {
+    
 #ifdef ZMQ_CPP11
     enum class ctxoption
     {
