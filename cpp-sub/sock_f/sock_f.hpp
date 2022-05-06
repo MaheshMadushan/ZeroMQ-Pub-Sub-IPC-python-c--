@@ -26,7 +26,7 @@ namespace IPCPYCPPZMQSOCK
     {
         in_process_communication = INPROC,
         inter_process_communication = IPC,
-        reliable_unicast_tcp = TCP, // disconnected TCP - endpoint don't need to be connected/exists to sen msg
+        reliable_unicast_tcp = TCP, // disconnected TCP - endpoint don't need to be connected/exists to send msg
         reliable_pragmatic_general_multicast = PGM,
         udp_pragmatic_encapsulated_general_multicast = EPGM
     };
