@@ -12,15 +12,7 @@
 //                 throw error_t();
 //             }
 #include <zmq.hpp>
-#define IPCPYCPPZMQ_DELETE(p_object)  \
-    {                                 \
-        if(p_object == ZMQ_NULLPTR){  \
-            return;                   \
-        }                             \
-        delete p_object;              \
-        p_object = 0;                 \
-    }
-
+#include "../utilities/utilities.h"
 class message_f
 {
     private:
