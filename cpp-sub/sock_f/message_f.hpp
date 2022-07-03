@@ -12,7 +12,8 @@
 //                 throw error_t();
 //             }
 #include <zmq.hpp>
-#include "../utilities/utilities.h"
+#include <utilities/utilities.h>
+
 class message_f
 {
     private:
@@ -20,22 +21,25 @@ class message_f
     
     public:
         message_f(void *data);
+        message_f(message_f &&rhs) noexcept : message(rhs.message);
         ~message_f();
 };
 
 
 message_f::message_f(void *data)
 {
-   this->message = new zmq::message_t(data,sizeof(data),free_data_buffer_fn,ZMQ_NULLPTR);
+    IPC_ASSERT(data != NULL);
+    this->message = new zmq::message_t(data,sizeof(data),free_data_buffer_fn,ZMQ_NULLPTR);
 }
 
 message_f::~message_f()
 {
-    IPCPYCPPZMQ_DELETE(this->message);
+    IPC_DELETE(this->message);
 }
 
 // free function - shouldn't be a member function - read https://stackoverflow.com/questions/2298242/callback-functions-in-c
 void free_data_buffer_fn(void *data, void *hint)
 {
-    IPCPYCPPZMQ_DELETE(data);
+    IPC_ASSERT(data == NULL);
+    IPC_DELETE(data);
 }
