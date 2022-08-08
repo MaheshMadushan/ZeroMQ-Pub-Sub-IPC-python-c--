@@ -1,6 +1,6 @@
 // encapsulate message
 // encapsulate all processes realated to message
-// user only need to specify message that in the intsererst of theirs .keep follwing dunction in mind. this is in socket.send_result_t send(message_t &msg, send_flags flags)
+// user only need to specify message that in the intsererst of theirs .keep in mind the follwing function . this is in socket.send_result_t send(message_t &msg, send_flags flags)
 //             {
 //                 int nbytes = zmq_msg_send(msg.handle(), _handle, static_cast<int>(flags));
 //                 if (nbytes >= 0)
