@@ -11,14 +11,7 @@
 #define PGM 400
 #define EPGM 500
 
-#define IPCPYCPPZMQ_DELETE(p_object)  \
-    {                                 \
-        if(p_object == ZMQ_NULLPTR){  \
-            return;                   \
-        }                             \
-        delete p_object;              \
-        p_object = 0;                 \
-    }
+#include <utilities/utilities.h>
 
 namespace IPCPYCPPZMQSOCK
 {
@@ -85,7 +78,7 @@ T IPCPYCPPZMQSOCK::sock_f::getSocketOption(int option_){
 
 IPCPYCPPZMQSOCK::sock_f::~sock_f()
 {
-    IPCPYCPPZMQ_DELETE(socket);
+    IPC_DELETE(socket);
 }
 
 #endif

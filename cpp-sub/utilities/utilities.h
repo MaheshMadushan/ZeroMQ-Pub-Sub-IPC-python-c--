@@ -13,4 +13,5 @@
 #ifndef NDEBUG
 #define IPC_ASSERT(expression) assert(expression)
 #endif
+
 #endif // UTILITIES_H
