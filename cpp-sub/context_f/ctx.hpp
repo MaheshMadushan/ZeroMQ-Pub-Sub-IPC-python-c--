@@ -13,7 +13,7 @@
 #include <zmq.hpp>
 #include <iostream>
 
-namespace IPCPYCPPZMQCTX
+namespace IPCCTX
 {
     
 #ifdef ZMQ_CPP11
@@ -37,23 +37,26 @@ namespace IPCPYCPPZMQCTX
 
     class ctx
     {
+        
         private:
             // type name             "new" returns a p
-            zmq::context_t *context = ZMQ_NULLPTR;
-        public:
+            zmq::context_t *_p_context = ZMQ_NULLPTR;
             ctx();
+
+        public:
+            static ctx *singleton_ctx;
+            static ctx *getCtx();
             void setCtxOption(ctxoption option, int option_value);
             int getCtxOption(ctxoption option);
             ~ctx();
     };
 }
 
-
-IPCPYCPPZMQCTX::ctx::ctx()
+IPCCTX::ctx::ctx()
 {
     try
     {
-        context  = new zmq::context_t();
+        _p_context  = new zmq::context_t();
     }
     catch (const std::bad_alloc &e)
     {
@@ -61,22 +64,36 @@ IPCPYCPPZMQCTX::ctx::ctx()
     }
 }
 
-void IPCPYCPPZMQCTX::ctx::setCtxOption(ctxoption option, int option_value)
+void IPCCTX::ctx::setCtxOption(ctxoption option, int option_value)
 {
-    this->context->set(static_cast<zmq::ctxopt>(option),option_value);
+    this->_p_context->set(static_cast<zmq::ctxopt>(option),option_value);
 }
 
-int IPCPYCPPZMQCTX::ctx::getCtxOption(ctxoption option)
+int IPCCTX::ctx::getCtxOption(ctxoption option)
 {
-    int option_value = this->context->get(static_cast<zmq::ctxopt>(option));
+    int option_value = this->_p_context->get(static_cast<zmq::ctxopt>(option));
     return option_value;
 }
 
-IPCPYCPPZMQCTX::ctx::~ctx()
+IPCCTX::ctx *IPCCTX::ctx::getCtx()
 {
-    this->context->~context_t();
-    IPCPYCPPZMQ_DELETE(context);
+    try
+    {
+        if(singleton_ctx == ZMQ_NULLPTR){
+            singleton_ctx = new ctx();
+        }
+        return singleton_ctx;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
+IPCCTX::ctx::~ctx()
+{
+    this->_p_context->~context_t();
+    IPCPYCPPZMQ_DELETE(_p_context);
+}
 
 #endif
