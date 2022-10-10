@@ -1,15 +1,7 @@
 #ifndef CTX_HPP
 #define CTX_HPP
 
-#define IPCPYCPPZMQ_DELETE(p_object)  \
-    {                                 \
-        if(p_object == ZMQ_NULLPTR){  \
-            return;                   \
-        }                             \
-        delete p_object;              \
-        p_object = 0;                 \
-    }
-    
+#include <utilities/utilities.h>
 #include <zmq.hpp>
 #include <iostream>
 
@@ -93,7 +85,7 @@ IPCCTX::ctx *IPCCTX::ctx::getCtx()
 IPCCTX::ctx::~ctx()
 {
     this->_p_context->~context_t();
-    IPCPYCPPZMQ_DELETE(_p_context);
+    IPC_DELETE(_p_context);
 }
 
 #endif
