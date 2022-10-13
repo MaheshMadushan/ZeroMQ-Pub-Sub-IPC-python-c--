@@ -13,7 +13,7 @@
 
 #include <utilities/utilities.h>
 
-namespace IPCPYCPPZMQSOCK
+namespace IPCSOCK
 {
     enum socket_types
     {
@@ -45,38 +45,38 @@ namespace IPCPYCPPZMQSOCK
             void setSocketOption(int option_,const void *optionValue, size_t optionValueLength);
     };
 
-} // namespace IPCPYCPPZMQSOCK
+} // namespace IPCSOCK
 
-IPCPYCPPZMQSOCK::sock_f::sock_f(){
+IPCSOCK::sock_f::sock_f(){
     this->socket = new zmq::socket_t();
 }
 
-void IPCPYCPPZMQSOCK::sock_f::bindSocketAddres(std::string const &address){
+void IPCSOCK::sock_f::bindSocketAddres(std::string const &address){
     this->socket->bind(address);
 }
 
-void IPCPYCPPZMQSOCK::sock_f::connectTo(std::string const &address){
+void IPCSOCK::sock_f::connectTo(std::string const &address){
     this->socket->connect(address);
 }
 
-void IPCPYCPPZMQSOCK::sock_f::disconnectFrom(std::string const &address){
+void IPCSOCK::sock_f::disconnectFrom(std::string const &address){
     this->socket->disconnect(address);
 }
 
-bool IPCPYCPPZMQSOCK::sock_f::isConnected(){
+bool IPCSOCK::sock_f::isConnected(){
     return this->socket->connected();
 }
 
-void IPCPYCPPZMQSOCK::sock_f::setSocketOption(int option_,const void *optionValue, size_t optionValueLength){
+void IPCSOCK::sock_f::setSocketOption(int option_,const void *optionValue, size_t optionValueLength){
     this->socket->setsockopt(option_,optionValue,optionValueLength);
 }
 
 template <typename T>
-T IPCPYCPPZMQSOCK::sock_f::getSocketOption(int option_){
+T IPCSOCK::sock_f::getSocketOption(int option_){
     return this->socket->getsockopt<T>(option_);
 }
 
-IPCPYCPPZMQSOCK::sock_f::~sock_f()
+IPCSOCK::sock_f::~sock_f()
 {
     IPC_DELETE(socket);
 }
