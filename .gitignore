@@ -1,5 +1,7 @@
 __pycache__
 cpp-sub/sub
 cpp-sub/sub.o
+cpp-sub/build
+.vscode/*
 .vscode/settings.json
 libzmq
