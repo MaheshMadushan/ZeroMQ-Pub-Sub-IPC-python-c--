@@ -1,7 +1,7 @@
 #ifndef CTX_HPP
 #define CTX_HPP
 
-#include <utilities/utilities.h>
+#include <utilities/utilities.hpp>
 #include <zmq.hpp>
 #include <iostream>
 
@@ -42,50 +42,9 @@ namespace IPCCTX
             int getCtxOption(ctxoption option);
             ~ctx();
     };
-}
 
-IPCCTX::ctx::ctx()
-{
-    try
-    {
-        _p_context  = new zmq::context_t();
-    }
-    catch (const std::bad_alloc &e)
-    {
-        std::cerr << e.what() /*  std::bad_alloc  */ << '\n';
-    }
-}
-
-void IPCCTX::ctx::setCtxOption(ctxoption option, int option_value)
-{
-    this->_p_context->set(static_cast<zmq::ctxopt>(option),option_value);
-}
-
-int IPCCTX::ctx::getCtxOption(ctxoption option)
-{
-    int option_value = this->_p_context->get(static_cast<zmq::ctxopt>(option));
-    return option_value;
-}
-
-IPCCTX::ctx *IPCCTX::ctx::getCtx()
-{
-    try
-    {
-        if(singleton_ctx == ZMQ_NULLPTR){
-            singleton_ctx = new ctx();
-        }
-        return singleton_ctx;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
-
-IPCCTX::ctx::~ctx()
-{
-    this->_p_context->~context_t();
-    IPC_DELETE(_p_context);
+    // ctx *IPCCTX::ctx::singleton_ctx;
+    
 }
 
 #endif
